@@ -1,5 +1,5 @@
 from app import app
-from models import Hero, Power, HeroPower, db
+from models import HeroPower,Hero, Power, db
 
 class TestHeroPower:
     '''Test model in models.py'''
