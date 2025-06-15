@@ -1,9 +1,5 @@
-import sys
-import os
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from app import app, db
-from server.models import Hero
+from app import app
+from models import Hero, db
 
 class TestHero:
     '''Test model in models.py'''

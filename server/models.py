@@ -17,9 +17,15 @@ class Hero(db.Model):
     def __repr__(self):
         return f'<Hero {self.id}, {self.name} {self.super_name}>'
 
-#
-#  class Power(db.Model):
-#     pass
+class Power(db.Model):
+    __tablename__ = 'powers'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    description = db.Column(db.String)
+
+    def __repr__(self):
+        return f'<Power {self.id}, {self.name} {self.description}>'
 
 # class HeroPower(db.Model):
 #     pass
