@@ -1,5 +1,6 @@
 from app import app
 from models import HeroPower,Hero, Power, db
+import pytest
 
 class TestHeroPower:
     '''Test model in models.py'''
@@ -36,3 +37,9 @@ class TestHeroPower:
             db.session.commit()
             assert hasattr(r, 'id')
             assert db.session.query(HeroPower).filter_by(id=r.id).first()
+
+    def test_strength_validation(self):
+        '''Raises ValueError if strength is invalid'''
+        with pytest.raises(ValueError) as excinfo:
+            HeroPower(strength='Super Strong')
+        assert "Strength must be one of" in str(excinfo.value)
