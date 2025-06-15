@@ -42,7 +42,7 @@ class HeroPower(db.Model, SerializerMixin):
     serialize_rules = ('-hero.hero_powers','-power.hero_powers')
 
     id = db.Column(db.Integer, primary_key=True)
-    strength = db.Column(db.String)
+    _strength = db.Column('strength',db.String)
     hero_id = db.Column(db.Integer, db.ForeignKey('heroes.id'))
     power_id = db.Column(db.Integer, db.ForeignKey('powers.id'))
 
@@ -51,3 +51,14 @@ class HeroPower(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'<HeroPower {self.id}, {self.strength}>'
+    
+    @property
+    def strength(self):
+        return self._strength
+    
+    @strength.setter    
+    def strength(self, value):
+        allowed = ['Strong', 'Weak', 'Average']
+        if value not in allowed:
+            raise ValueError("Strength must be one of: 'Strong', 'Weak', 'Average'")
+        self._strength = value
