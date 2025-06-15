@@ -29,12 +29,23 @@ class Power(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-    description = db.Column(db.String)
+    _description = db.Column('description',db.String)
 
     hero_powers = db.relationship('HeroPower', back_populates='power',cascade='all, delete-orphan')
 
     def __repr__(self):
         return f'<Power {self.id}, {self.name} {self.description}>'
+    
+
+    @property
+    def description(self):
+        return self._description
+    
+    @description.setter
+    def description(self,value):
+        if len(value.strip()) < 20:
+            raise ValueError("Description must be at least 20 characters long.")
+        self._description = value
 
 class HeroPower(db.Model, SerializerMixin):
     __tablename__ = 'hero_powers'
