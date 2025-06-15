@@ -27,6 +27,13 @@ class Power(db.Model):
     def __repr__(self):
         return f'<Power {self.id}, {self.name} {self.description}>'
 
-# class HeroPower(db.Model):
-#     pass
+class HeroPower(db.Model):
+    __tablename__ = 'hero_powers'
 
+    id = db.Column(db.Integer, primary_key=True)
+    strength = db.Column(db.String)
+    hero_id = db.Column(db.Integer, db.ForeignKey('heroes.id'))
+    power_id = db.Column(db.Integer, db.ForeignKey('powers.id'))
+
+    def __repr__(self):
+        return f'<HeroPower {self.id}, {self.strength}>'
