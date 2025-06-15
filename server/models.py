@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
+from sqlalchemy_serializer import SerializerMixin
 
 metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
@@ -7,8 +8,10 @@ metadata = MetaData(naming_convention={
 
 db = SQLAlchemy(metadata=metadata)
 
-class Hero(db.Model):
+class Hero(db.Model, SerializerMixin):
     __tablename__ = 'heroes'
+
+    serialize_rules = ('-hero_powers.hero',)
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -19,8 +22,10 @@ class Hero(db.Model):
     def __repr__(self):
         return f'<Hero {self.id}, {self.name} {self.super_name}>'
 
-class Power(db.Model):
+class Power(db.Model, SerializerMixin):
     __tablename__ = 'powers'
+
+    serialize_rules = ('-hero_powers.power',)
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -31,8 +36,10 @@ class Power(db.Model):
     def __repr__(self):
         return f'<Power {self.id}, {self.name} {self.description}>'
 
-class HeroPower(db.Model):
+class HeroPower(db.Model, SerializerMixin):
     __tablename__ = 'hero_powers'
+
+    serialize_rules = ('-hero.hero_powers','-power.hero_powers')
 
     id = db.Column(db.Integer, primary_key=True)
     strength = db.Column(db.String)
