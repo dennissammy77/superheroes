@@ -14,6 +14,8 @@ class Hero(db.Model):
     name = db.Column(db.String)
     super_name = db.Column(db.String)
 
+    hero_powers = db.relationship('HeroPower', back_populates='hero',cascade='all, delete-orphan')
+
     def __repr__(self):
         return f'<Hero {self.id}, {self.name} {self.super_name}>'
 
@@ -23,6 +25,8 @@ class Power(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     description = db.Column(db.String)
+
+    hero_powers = db.relationship('HeroPower', back_populates='power',cascade='all, delete-orphan')
 
     def __repr__(self):
         return f'<Power {self.id}, {self.name} {self.description}>'
@@ -34,6 +38,9 @@ class HeroPower(db.Model):
     strength = db.Column(db.String)
     hero_id = db.Column(db.Integer, db.ForeignKey('heroes.id'))
     power_id = db.Column(db.Integer, db.ForeignKey('powers.id'))
+
+    hero = db.relationship("Hero", back_populates="hero_powers")
+    power = db.relationship("Power", back_populates="hero_powers")
 
     def __repr__(self):
         return f'<HeroPower {self.id}, {self.strength}>'
