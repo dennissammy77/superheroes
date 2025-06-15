@@ -32,7 +32,7 @@ Prerequisites
 ## Installation
 ```bash
     # Clone the repository
-    git clone https://github.com/sammydennis/superheroes.git
+    git clone https://github.com/dennissammy77/superheroes.git
     cd superheroes
 
     # Set up virtual environment
@@ -71,4 +71,4 @@ Prerequisites
 
 ## Support
 If you encounter any issues, feel free to contact me at:
-`sammy@example.com`
+`dennissammy77@gmail.com`
