@@ -1,3 +1,4 @@
+import pytest
 from app import app
 from models import Hero, Power, HeroPower, db
 
@@ -45,3 +46,9 @@ class TestPower:
 
 
             assert db.session.query(Power).filter_by(id=super_strength.id).first().hero_powers == [h_p]
+
+    def test_description_length_validation(self):
+        '''Raises ValueError if description is short'''
+        with pytest.raises(ValueError) as excinfo:
+            Power(description='I am short')
+        assert "Description must be at least 20 characters long." in str(excinfo.value)
